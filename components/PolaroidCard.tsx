@@ -16,7 +16,7 @@ export function PolaroidCard({
   index: number;
   onHoverChange: (index: number, active: boolean) => void;
 }) {
-  const baseRef = useRef<HTMLDivElement>(null);
+  const baseRef = useRef<HTMLLIElement>(null);
   const photoRef = useRef<HTMLImageElement>(null);
   const arrowRef = useRef<SVGSVGElement>(null);
   const ruleRef = useRef<HTMLSpanElement>(null);

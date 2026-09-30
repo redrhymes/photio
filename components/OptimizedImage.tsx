@@ -23,3 +23,7 @@ export const OptimizedImage = forwardRef<HTMLImageElement, ImageProps>(
     );
   },
 );
+
+OptimizedImage.displayName = "OptimizedImage";
+
+export default OptimizedImage;
