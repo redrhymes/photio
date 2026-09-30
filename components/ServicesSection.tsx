@@ -58,7 +58,7 @@ export function ServicesSection() {
 
     const context = gsap.context(() => {
       const timeline = gsap.timeline({
-        scrollTrigger: { trigger: section, start: "top 70%", once: true },
+        scrollTrigger: { trigger: section, start: "top 80%", once: true, toggleActions: "play none none none" },
       });
       timeline
         .fromTo(line, { scaleX: 0 }, { scaleX: 1, duration: .5, ease: "power2.out" })

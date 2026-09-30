@@ -21,21 +21,16 @@ export function WorkSlider() {
     gsap.registerPlugin(ScrollTrigger, SplitText);
     const heading = section.querySelector<HTMLElement>("[data-work-heading]");
     const controls = section.querySelectorAll<HTMLElement>("[data-work-control]");
-    const panels = section.querySelectorAll<HTMLElement>(".work-panel");
+    const panels = Array.from(section.querySelectorAll<HTMLElement>(".work-panel"));
+    const gallery = section.querySelector<HTMLElement>(".work-gallery");
     const split = heading ? new SplitText(heading, { type: "lines", linesClass: "work-heading-line" }) : null;
+    let panelImages: HTMLImageElement[] = [];
+    let onPanelImageStatus: EventListener | undefined;
     const context = gsap.context(() => {
-      const timeline = gsap.timeline({ scrollTrigger: { trigger: section, start: "top 65%", once: true } });
+      const timeline = gsap.timeline({ paused: true });
       if (split) timeline.fromTo(split.lines, { yPercent: 110 }, { yPercent: 0, duration: 1.1, stagger: .12, ease: "power4.out" });
       timeline
         .fromTo(controls, { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: .55, stagger: .08, ease: "power3.out" }, "-=.55")
-        .fromTo(panels, { x: 120, opacity: 0 }, {
-          x: 0,
-          opacity: 1,
-          duration: 1.2,
-          stagger: .1,
-          ease: "power3.out",
-          onComplete: () => gsap.set(panels, { clearProps: "opacity,x" }),
-        }, "-=.25")
         .fromTo(section.querySelectorAll("[data-work-progress]"), { scaleX: 0 }, {
           scaleX: 1,
           duration: .55,
@@ -43,8 +38,69 @@ export function WorkSlider() {
           ease: "power2.out",
           onComplete: () => gsap.set(section.querySelectorAll("[data-work-progress]"), { clearProps: "transform" }),
         }, "-=.65");
+
+      const panelTimeline = gsap.timeline({ paused: true });
+      panelTimeline.fromTo(panels, { x: 120, opacity: 0 }, {
+        x: 0,
+        opacity: 1,
+        duration: 1.2,
+        stagger: .1,
+        ease: "power3.out",
+        onComplete: () => gsap.set(panels, { clearProps: "opacity,x" }),
+      });
+
+      const handlePanelImageStatus: EventListener = () => {
+        if (panelImages.every((image) => image.complete)) {
+          panelImages.forEach((image) => {
+            image.removeEventListener("load", handlePanelImageStatus);
+            image.removeEventListener("error", handlePanelImageStatus);
+          });
+          panelTimeline.play();
+        }
+      };
+      onPanelImageStatus = handlePanelImageStatus;
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top 80%",
+        once: true,
+        toggleActions: "play none none none",
+        onEnter: () => {
+          timeline.play();
+          if (!gallery) {
+            panelImages = panels
+              .slice(0, 1)
+              .map((panel) => panel.querySelector("img"))
+              .filter((image): image is HTMLImageElement => image !== null);
+          } else {
+            const bounds = gallery.getBoundingClientRect();
+            panelImages = panels
+              .filter((panel) => {
+                const panelBounds = panel.getBoundingClientRect();
+                return panelBounds.left < bounds.right && panelBounds.right > bounds.left;
+              })
+              .map((panel) => panel.querySelector("img"))
+              .filter((image): image is HTMLImageElement => image !== null);
+          }
+          panelImages.forEach((image) => { image.loading = "eager"; });
+          if (panelImages.every((image) => image.complete)) {
+            panelTimeline.play();
+          } else {
+            panelImages.forEach((image) => {
+              image.addEventListener("load", handlePanelImageStatus);
+              image.addEventListener("error", handlePanelImageStatus);
+            });
+          }
+        },
+      });
     }, section);
     return () => {
+      const listener = onPanelImageStatus;
+      if (listener) {
+        panelImages.forEach((image) => {
+          image.removeEventListener("load", listener);
+          image.removeEventListener("error", listener);
+        });
+      }
       context.revert();
       split?.revert();
     };

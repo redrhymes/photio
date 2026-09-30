@@ -23,7 +23,10 @@ export function ProcessSection() {
     const highlight = section.querySelector<HTMLElement>("[data-process-highlight]");
     const copy = section.querySelector<HTMLElement>("[data-process-subcopy]");
     const hero = section.querySelector<HTMLElement>("[data-process-hero]");
+    const heroImage = hero?.querySelector("img");
     if (!label || !labelLine || !heading || !copy || !hero) return;
+    let heroSectionEntered = false;
+    let onHeroImageStatus: EventListener | undefined;
 
     const split = reducedMotion
       ? null
@@ -34,13 +37,13 @@ export function ProcessSection() {
           opacity: 1,
           duration: 0.45,
           stagger: 0.06,
-          scrollTrigger: { trigger: section, start: "top 65%", once: true },
+          scrollTrigger: { trigger: section, start: "top 80%", once: true, toggleActions: "play none none none" },
         });
         return;
       }
 
       const timeline = gsap.timeline({
-        scrollTrigger: { trigger: section, start: "top 65%", once: true },
+        scrollTrigger: { trigger: section, start: "top 80%", once: true, toggleActions: "play none none none" },
       });
       timeline
         .fromTo(labelLine, { scaleX: 0 }, { scaleX: 1, duration: 0.55, ease: "power2.out" })
@@ -56,19 +59,48 @@ export function ProcessSection() {
           duration: 0.7,
           ease: "power2.out",
         }, "-=.35")
-        .fromTo(copy, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6 }, "-=.5")
-        .fromTo(hero, {
-          clipPath: "inset(100% 0 0 0)",
-          scale: 1.1,
-        }, {
-          clipPath: "inset(0% 0 0 0)",
-          scale: 1,
-          duration: 1.1,
-          ease: "power3.out",
-        }, "-=.3");
+        .fromTo(copy, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6 }, "-=.5");
+      const heroTimeline = gsap.timeline({ paused: true });
+      heroTimeline.fromTo(hero, {
+        clipPath: "inset(100% 0 0 0)",
+        scale: 1.1,
+      }, {
+        clipPath: "inset(0% 0 0 0)",
+        scale: 1,
+        duration: 1.1,
+        ease: "power3.out",
+      });
+
+      const startHeroReveal = () => {
+        if (heroSectionEntered && (!heroImage || heroImage.complete)) heroTimeline.play();
+      };
+      if (heroImage && !heroImage.complete) {
+        const handleHeroImageStatus: EventListener = () => {
+          heroImage.removeEventListener("load", handleHeroImageStatus);
+          heroImage.removeEventListener("error", handleHeroImageStatus);
+          startHeroReveal();
+        };
+        onHeroImageStatus = handleHeroImageStatus;
+        heroImage.addEventListener("load", handleHeroImageStatus);
+        heroImage.addEventListener("error", handleHeroImageStatus);
+      }
+      ScrollTrigger.create({
+        trigger: hero,
+        start: "top 80%",
+        once: true,
+        toggleActions: "play none none none",
+        onEnter: () => {
+          heroSectionEntered = true;
+          startHeroReveal();
+        },
+      });
     }, section);
 
     return () => {
+      if (heroImage && onHeroImageStatus) {
+        heroImage.removeEventListener("load", onHeroImageStatus);
+        heroImage.removeEventListener("error", onHeroImageStatus);
+      }
       context.revert();
       split?.revert();
     };

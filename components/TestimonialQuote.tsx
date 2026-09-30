@@ -33,8 +33,9 @@ export function TestimonialQuote({
       ease: "power4.out",
       scrollTrigger: {
         trigger: quoteText,
-        start: "top 78%",
+        start: "top 80%",
         once: true,
+        toggleActions: "play none none none",
       },
     });
     return () => {

@@ -46,14 +46,14 @@ export function TestimonialsSection() {
       gsap.fromTo(section, { opacity: 0 }, {
         opacity: 1,
         duration: 0.5,
-        scrollTrigger: { trigger: section, start: "top 65%", once: true },
+        scrollTrigger: { trigger: section, start: "top 80%", once: true, toggleActions: "play none none none" },
       });
       return;
     }
 
     const context = gsap.context(() => {
       const timeline = gsap.timeline({
-        scrollTrigger: { trigger: section, start: "top 65%", once: true },
+        scrollTrigger: { trigger: section, start: "top 80%", once: true, toggleActions: "play none none none" },
       });
       timeline
         .fromTo(rule, { scaleX: 0 }, { scaleX: 1, duration: 0.55, ease: "power2.out" })
@@ -111,7 +111,7 @@ export function TestimonialsSection() {
         duration: 0.35,
         stagger: 0.1,
         ease: "back.out(2)",
-        scrollTrigger: { trigger: trust, start: "top 90%", once: true },
+        scrollTrigger: { trigger: trust, start: "top 90%", once: true, toggleActions: "play none none none" },
       });
     }, section);
     return () => context.revert();

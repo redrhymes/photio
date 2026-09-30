@@ -42,10 +42,16 @@ export function useApproachAnimation() {
     const split = new SplitText(heading, { type: "lines", linesClass: "approach-line-mask" });
     const arcLength = arc.getTotalLength();
     gsap.set(arc, { strokeDasharray: arcLength, strokeDashoffset: arcLength });
+    const photoImages = [back, front]
+      .map((photo) => photo.querySelector("img"))
+      .filter((image): image is HTMLImageElement => image !== null);
+    let photoSectionEntered = false;
+    let photoImagesReady = photoImages.every((image) => image.complete);
+    let onPhotoImageStatus: EventListener | undefined;
 
     const context = gsap.context(() => {
       const timeline = gsap.timeline({
-        scrollTrigger: { trigger: section, start: "top 70%", once: true },
+        scrollTrigger: { trigger: section, start: "top 80%", once: true, toggleActions: "play none none none" },
       });
 
       timeline
@@ -59,11 +65,45 @@ export function useApproachAnimation() {
       }
 
       timeline
-        .fromTo(back, { opacity: 0, scale: .9 }, { opacity: 1, scale: 1, duration: .8, ease: "power3.out" }, "-=.55")
+        .fromTo(dividers, { scaleY: 0 }, { scaleY: 1, duration: .5, stagger: .1, ease: "power2.out" });
+
+      const photoTimeline = gsap.timeline({ paused: true });
+      photoTimeline
+        .fromTo(back, { opacity: 0, scale: .9 }, { opacity: 1, scale: 1, duration: .8, ease: "power3.out" })
         .fromTo(front, { opacity: 0, scale: 1.06, rotation: 0 }, { opacity: 1, scale: 1, rotation: 3, duration: .9, ease: "power3.out" }, "-=.55")
         .to(arc, { strokeDashoffset: 0, duration: 1.4, ease: "power2.out" }, "<")
-        .fromTo(script, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .45, ease: "power2.out" }, "-=.25")
-        .fromTo(dividers, { scaleY: 0 }, { scaleY: 1, duration: .5, stagger: .1, ease: "power2.out" });
+        .fromTo(script, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .45, ease: "power2.out" }, "-=.25");
+
+      const startPhotoReveal = () => {
+        if (photoSectionEntered && photoImagesReady) photoTimeline.play();
+      };
+      const handlePhotoImageStatus: EventListener = () => {
+        photoImagesReady = photoImages.every((image) => image.complete);
+        if (photoImagesReady) {
+          photoImages.forEach((image) => {
+            image.removeEventListener("load", handlePhotoImageStatus);
+            image.removeEventListener("error", handlePhotoImageStatus);
+          });
+          startPhotoReveal();
+        }
+      };
+      onPhotoImageStatus = handlePhotoImageStatus;
+      if (!photoImagesReady) {
+        photoImages.forEach((image) => {
+          image.addEventListener("load", handlePhotoImageStatus);
+          image.addEventListener("error", handlePhotoImageStatus);
+        });
+      }
+      ScrollTrigger.create({
+        trigger: back,
+        start: "top 80%",
+        once: true,
+        toggleActions: "play none none none",
+        onEnter: () => {
+          photoSectionEntered = true;
+          startPhotoReveal();
+        },
+      });
 
       counters.forEach((counter) => {
         const target = Number(counter.dataset.countTarget ?? 0);
@@ -95,6 +135,13 @@ export function useApproachAnimation() {
     }, section);
 
     return () => {
+      const imageStatusListener = onPhotoImageStatus;
+      if (imageStatusListener) {
+        photoImages.forEach((image) => {
+          image.removeEventListener("load", imageStatusListener);
+          image.removeEventListener("error", imageStatusListener);
+        });
+      }
       context.revert();
       split.revert();
     };

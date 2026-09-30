@@ -21,24 +21,40 @@ export function StepPhoto({
     gsap.registerPlugin(ScrollTrigger);
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const restRotation = [-4, 3, -3, 5][index % 4];
-    const fromX = index % 2 === 0 ? -42 : 42;
-    const context = gsap.context(() => {
-      gsap.fromTo(
-        photo,
-        { x: fromX, opacity: 0, rotation: index % 2 === 0 ? -9 : 10 },
-        {
-          x: 0,
-          opacity: 1,
-          rotation: restRotation,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: { trigger: photo, start: "top 82%", once: true },
-          onComplete: () => gsap.set(photo, { clearProps: "transform" }),
-        },
-      );
-    }, photo);
-    return () => context.revert();
+    const image = photo.querySelector("img");
+    let context: gsap.Context | undefined;
+    const reveal = () => {
+      const restRotation = [-4, 3, -3, 5][index % 4];
+      const fromX = index % 2 === 0 ? -42 : 42;
+      context = gsap.context(() => {
+        gsap.fromTo(
+          photo,
+          { x: fromX, opacity: 0, rotation: index % 2 === 0 ? -9 : 10 },
+          {
+            x: 0,
+            opacity: 1,
+            rotation: restRotation,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: { trigger: photo, start: "top 82%", once: true, toggleActions: "play none none none" },
+            onComplete: () => gsap.set(photo, { clearProps: "transform" }),
+          },
+        );
+      }, photo);
+    };
+
+    if (!image || image.complete) {
+      reveal();
+      return () => context?.revert();
+    }
+
+    image.addEventListener("load", reveal, { once: true });
+    image.addEventListener("error", reveal, { once: true });
+    return () => {
+      image.removeEventListener("load", reveal);
+      image.removeEventListener("error", reveal);
+      context?.revert();
+    };
   }, [index]);
 
   return (

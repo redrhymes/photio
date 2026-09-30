@@ -31,7 +31,7 @@ export function ProcessStep({
           duration: reducedMotion ? 0.45 : 0.65,
           stagger: reducedMotion ? 0.05 : 0.1,
           ease: "power3.out",
-          scrollTrigger: { trigger: block, start: "top 82%", once: true },
+          scrollTrigger: { trigger: block, start: "top 82%", once: true, toggleActions: "play none none none" },
         },
       );
     }, block);

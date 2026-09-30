@@ -38,7 +38,7 @@ export function TimelinePath() {
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: svg.parentElement,
-          start: "top 75%",
+          start: "top 80%",
           end: "bottom 75%",
           scrub: 0.7,
         },

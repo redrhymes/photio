@@ -17,13 +17,15 @@ export function useTileReveal(sectionRef: RefObject<HTMLElement | null>, tiles: 
     const label = section.querySelector<HTMLElement>("[data-set-eyebrow]");
     const sublabel = section.querySelector<HTMLElement>("[data-set-sublabel]");
     const elements = Array.from(section.querySelectorAll<HTMLElement>("[data-set-tile]"));
-    const images = elements.map((element) => element.querySelector<HTMLElement>(".set-tile-image"));
+    const images = elements
+      .map((element) => element.querySelector<HTMLImageElement>(".set-tile-image"))
+      .filter((image): image is HTMLImageElement => image !== null);
 
     if (reducedMotion) {
       gsap.set([line, label, sublabel, ...elements], { clearProps: "all" });
       elements.forEach((element) => {
         const link = element.querySelector<HTMLElement>(".set-tile-link");
-        const image = element.querySelector<HTMLElement>(".set-tile-image");
+        const image = element.querySelector<HTMLImageElement>(".set-tile-image");
         const caption = element.querySelector<HTMLElement>(".set-tile-caption");
         if (link) link.style.clipPath = element.style.getPropertyValue("--tile-clip");
         gsap.set([image, caption], { clearProps: "all" });
@@ -32,10 +34,11 @@ export function useTileReveal(sectionRef: RefObject<HTMLElement | null>, tiles: 
     }
 
     const split = heading ? new SplitText(heading, { type: "lines", linesClass: "set-heading-line" }) : null;
+    let tileSectionEntered = false;
+    let tileImagesReady = images.every((image) => image.complete);
+    let imageStatusListener: EventListener | undefined;
     const context = gsap.context(() => {
-      const timeline = gsap.timeline({
-        scrollTrigger: { trigger: section, start: "top 70%", once: true },
-      });
+      const timeline = gsap.timeline({ paused: true });
       timeline
         .fromTo(line, { scaleX: 0 }, { scaleX: 1, duration: .5, ease: "power2.out" })
         .fromTo(label, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .5, ease: "power3.out" }, "-=.12");
@@ -49,6 +52,14 @@ export function useTileReveal(sectionRef: RefObject<HTMLElement | null>, tiles: 
       }
       timeline
         .fromTo(sublabel, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .45, ease: "power2.out" }, "-=.25")
+        .fromTo(section.querySelector(".set-cta-underline"), { scaleX: 0 }, {
+          scaleX: 1,
+          duration: .6,
+          ease: "power2.out",
+        }, "-=.2");
+
+      const tileTimeline = gsap.timeline({ paused: true });
+      tileTimeline
         .fromTo(elements, {
           x: (index) => tiles[index].direction === "left" ? -90 : tiles[index].direction === "right" ? 90 : 0,
           y: (index) => tiles[index].direction === "bottom" ? 90 : 0,
@@ -70,7 +81,7 @@ export function useTileReveal(sectionRef: RefObject<HTMLElement | null>, tiles: 
             const link = element.querySelector<HTMLElement>(".set-tile-link");
             if (link) link.style.clipPath = tiles[index].polygon;
           }),
-        }, "-=.1")
+        })
         .fromTo(images,
           { scale: (index) => tiles[index].slug === "bali-vibes" ? 1 : 1.3 },
           { scale: (index) => tiles[index].slug === "bali-vibes" ? 1 : 1.12, duration: 1.2, stagger: .12, ease: "power3.out" },
@@ -82,15 +93,51 @@ export function useTileReveal(sectionRef: RefObject<HTMLElement | null>, tiles: 
           duration: .45,
           stagger: .12,
           ease: "power2.out",
-        }, "-=.25")
-        .fromTo(section.querySelector(".set-cta-underline"), { scaleX: 0 }, {
-          scaleX: 1,
-          duration: .6,
-          ease: "power2.out",
-        }, "-=.2");
+        }, "-=.25");
+
+      const startTileReveal = () => {
+        if (tileSectionEntered && tileImagesReady) tileTimeline.play();
+      };
+      const handleImageStatus: EventListener = () => {
+        tileImagesReady = images.every((image) => image.complete);
+        if (tileImagesReady) {
+          images.forEach((image) => {
+            image.removeEventListener("load", handleImageStatus);
+            image.removeEventListener("error", handleImageStatus);
+          });
+          startTileReveal();
+        }
+      };
+      imageStatusListener = handleImageStatus;
+      if (!tileImagesReady) {
+        images.forEach((image) => {
+          image.addEventListener("load", handleImageStatus);
+          image.addEventListener("error", handleImageStatus);
+        });
+      }
+
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top 80%",
+        once: true,
+        toggleActions: "play none none none",
+        onEnter: () => {
+          tileSectionEntered = true;
+          images.forEach((image) => { image.loading = "eager"; });
+          timeline.play();
+          startTileReveal();
+        },
+      });
     }, section);
 
     return () => {
+      const listener = imageStatusListener;
+      if (listener) {
+        images.forEach((image) => {
+          image.removeEventListener("load", listener);
+          image.removeEventListener("error", listener);
+        });
+      }
       context.revert();
       split?.revert();
     };

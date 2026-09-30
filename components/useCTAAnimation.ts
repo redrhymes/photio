@@ -14,6 +14,7 @@ export function useCTAAnimation() {
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const background = section.querySelector<HTMLElement>("[data-cta-background-image]");
+    const backgroundImage = background?.querySelector("img");
     const label = section.querySelector<HTMLElement>("[data-cta-tagline]");
     const headlineLines = section.querySelectorAll<HTMLElement>("[data-cta-headline-line]");
     const highlight = section.querySelector<HTMLElement>("[data-cta-highlight]");
@@ -26,11 +27,13 @@ export function useCTAAnimation() {
       gsap.fromTo(section, { opacity: 0 }, {
         opacity: 1,
         duration: 0.5,
-        scrollTrigger: { trigger: section, start: "top 70%", once: true },
+        scrollTrigger: { trigger: section, start: "top 80%", once: true, toggleActions: "play none none none" },
       });
       return;
     }
 
+    let backgroundEntered = false;
+    let onBackgroundImageStatus: EventListener | undefined;
     const idleDrift = gsap.to(background, {
       scale: 1.04,
       duration: 14,
@@ -44,18 +47,13 @@ export function useCTAAnimation() {
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: "top 70%",
+          start: "top 80%",
           once: true,
+          toggleActions: "play none none none",
           onToggle: ({ isActive }) => idleDrift.paused(!isActive),
         },
       });
       timeline
-        .fromTo(background, { scale: 1.15, opacity: 0 }, {
-          scale: 1,
-          opacity: 1,
-          duration: 1.6,
-          ease: "power2.out",
-        })
         .fromTo(headlineLines, { yPercent: 110 }, {
           yPercent: 0,
           duration: 1.1,
@@ -91,6 +89,37 @@ export function useCTAAnimation() {
           ease: "power2.out",
         }, "<");
 
+      const backgroundTimeline = gsap.timeline({ paused: true });
+      backgroundTimeline.fromTo(background, { scale: 1.15, opacity: 0 }, {
+        scale: 1,
+        opacity: 1,
+        duration: 1.6,
+        ease: "power2.out",
+      });
+      const startBackgroundReveal = () => {
+        if (backgroundEntered && (!backgroundImage || backgroundImage.complete)) backgroundTimeline.play();
+      };
+      if (backgroundImage && !backgroundImage.complete) {
+        const handleBackgroundImageStatus: EventListener = () => {
+          backgroundImage.removeEventListener("load", handleBackgroundImageStatus);
+          backgroundImage.removeEventListener("error", handleBackgroundImageStatus);
+          startBackgroundReveal();
+        };
+        onBackgroundImageStatus = handleBackgroundImageStatus;
+        backgroundImage.addEventListener("load", handleBackgroundImageStatus);
+        backgroundImage.addEventListener("error", handleBackgroundImageStatus);
+      }
+      ScrollTrigger.create({
+        trigger: background,
+        start: "top 80%",
+        once: true,
+        toggleActions: "play none none none",
+        onEnter: () => {
+          backgroundEntered = true;
+          startBackgroundReveal();
+        },
+      });
+
       gsap.to(section.querySelector(".cta-background-layer"), {
         yPercent: 8,
         ease: "none",
@@ -104,6 +133,10 @@ export function useCTAAnimation() {
     }, section);
 
     return () => {
+      if (backgroundImage && onBackgroundImageStatus) {
+        backgroundImage.removeEventListener("load", onBackgroundImageStatus);
+        backgroundImage.removeEventListener("error", onBackgroundImageStatus);
+      }
       idleDrift.kill();
       context.revert();
     };

@@ -38,7 +38,7 @@ export function useIntroAnimation() {
     const split = new SplitText(headline, { type: "lines", linesClass: "intro-line-mask" });
     const context = gsap.context(() => {
       const timeline = gsap.timeline({
-        scrollTrigger: { trigger: section, start: "top 70%", once: true },
+        scrollTrigger: { trigger: section, start: "top 80%", once: true, toggleActions: "play none none none" },
         onComplete: finishCounters,
       });
       timeline
@@ -68,13 +68,13 @@ export function useIntroAnimation() {
           clipPath: "inset(0 0 0 0)",
           duration: 1.25,
           ease: "power3.inOut",
-          scrollTrigger: { trigger: section, start: "top 70%", once: true },
+          scrollTrigger: { trigger: section, start: "top 80%", once: true, toggleActions: "play none none none" },
         });
         gsap.fromTo(photoImage, { scale: 1.08 }, {
           scale: 1,
           duration: 1.25,
           ease: "power3.out",
-          scrollTrigger: { trigger: section, start: "top 70%", once: true },
+          scrollTrigger: { trigger: section, start: "top 80%", once: true, toggleActions: "play none none none" },
         });
         gsap.to(photoImage, {
           yPercent: -6,
