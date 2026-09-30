@@ -9,7 +9,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Clothespin } from "@/components/Clothespin";
 import { PolaroidCard } from "@/components/PolaroidCard";
 import { RopeStage } from "@/components/RopeStage";
-import { useBreeze } from "@/components/useBreeze";
 import { useSway } from "@/components/useSway";
 import { serviceCards } from "@/lib/services";
 
@@ -31,7 +30,6 @@ export function ServicesSection() {
   const [mobileIndex, setMobileIndex] = useState(0);
   const stageRef = useRef<HTMLDivElement>(null);
   const mobileRef = useRef<HTMLDivElement>(null);
-  useBreeze(sectionRef, serviceCards);
 
   useEffect(() => {
     setDebug(new URLSearchParams(window.location.search).get("debug") === "1");
@@ -58,37 +56,49 @@ export function ServicesSection() {
 
     const context = gsap.context(() => {
       const timeline = gsap.timeline({
-        scrollTrigger: { trigger: section, start: "top 80%", once: true, toggleActions: "play none none none" },
+        scrollTrigger: {
+          trigger: section,
+          start: "top 80%",
+          once: true,
+          toggleActions: "play none none none",
+          onEnter: () => {
+            cards.forEach((card) => {
+              const image = card.querySelector<HTMLImageElement>("img");
+              if (image) image.loading = "eager";
+            });
+          },
+        },
       });
       timeline
-        .fromTo(line, { scaleX: 0 }, { scaleX: 1, duration: .5, ease: "power2.out" })
-        .fromTo(label, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .55, ease: "power3.out" }, "-=.12");
-      timeline.fromTo(words, { yPercent: 110 }, {
-        yPercent: 0,
-        duration: 1,
-        stagger: .08,
-        ease: "power4.out",
-      }, "-=.12");
-      timeline.fromTo(rope, { clipPath: "inset(0 100% 0 0)" }, {
-        clipPath: "inset(0 0 0 0)",
-        duration: 1.4,
-        ease: "power2.inOut",
-      }, "-=.1");
+        .fromTo(line, { scaleX: 0 }, { scaleX: 1, duration: .45, ease: "power2.out" }, 0)
+        .fromTo(label, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .45, ease: "power3.out" }, .08)
+        .fromTo(words, { yPercent: 110 }, {
+          yPercent: 0,
+          duration: .8,
+          stagger: .05,
+          ease: "power4.out",
+        }, .12)
+        .fromTo(rope, { clipPath: "inset(0 100% 0 0)" }, {
+          clipPath: "inset(0 0 0 0)",
+          duration: .95,
+          ease: "power2.inOut",
+        }, .15);
       const stageWidth = stage.getBoundingClientRect().width;
-      cards.forEach((card, index) => {
-        const pinDelay = serviceCards[index].pinX / 100 * .45;
-        const restAngle = serviceCards[index].rotation;
-        timeline.fromTo(card, {
-          y: -stageWidth * .14,
-          rotation: restAngle + 25,
-        }, {
-          y: 0,
-          rotation: restAngle,
-          duration: 1.6,
-          ease: "elastic.out(1, 0.4)",
-        }, `>-=${1.15 - pinDelay}`);
-      });
-      timeline.fromTo(pins, { opacity: 0 }, { opacity: 1, duration: .35, stagger: .08 }, "<");
+      timeline.fromTo(cards, {
+        y: -stageWidth * .1,
+        rotation: (index) => serviceCards[index].rotation + (index % 2 === 0 ? 16 : -16),
+      }, {
+        y: 0,
+        rotation: (index) => serviceCards[index].rotation,
+        duration: 1.05,
+        stagger: .1,
+        ease: "power3.out",
+      }, .35);
+      timeline.fromTo(pins, { opacity: 0 }, {
+        opacity: 1,
+        duration: .3,
+        stagger: .06,
+      }, .55);
     }, section);
 
     return () => {
