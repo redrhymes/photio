@@ -28,7 +28,7 @@ export function Hero() {
     return () => window.clearTimeout(timer);
   }, [activeIndex, isPaused, reducedMotion]);
 
-  const goToNextSection = () => document.getElementById("approach")?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth" });
+  const goToNextSection = () => document.getElementById("services")?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth" });
   const slideNumber = String(activeIndex + 1).padStart(2, "0");
 
   return (
@@ -36,7 +36,7 @@ export function Hero() {
       ref={heroRef}
       data-theme="dark"
       className="hero-section relative flex h-[100svh] min-h-[560px] w-full items-end overflow-hidden bg-ink text-white md:min-h-[650px] sm:items-center"
-      aria-label="Photio wedding and pre-wedding photography"
+      aria-label="Photio photography and film for people, brands, events and artists"
       onPointerEnter={(event) => { if (event.pointerType === "mouse") setIsPaused(true); }}
       onPointerLeave={(event) => { if (event.pointerType === "mouse") setIsPaused(false); }}
       onFocusCapture={() => setIsPaused(true)}
@@ -53,15 +53,17 @@ export function Hero() {
         <div className="pl-0 md:pl-12 xl:pl-0">
           <p data-hero-eyebrow className="eyebrow mb-7 flex items-center gap-5 text-white opacity-0 sm:mb-8 sm:gap-6 sm:text-[12px] sm:tracking-[.3em]">
             <span className="h-px w-[50px] shrink-0 bg-white/70" />
-            <span>Photio — Wedding &amp; Pre-wedding Photography</span>
+            <span>Photio — Photography &amp; Film</span>
           </p>
           <h1 data-hero-headline className="display max-w-[1150px] text-[clamp(2.55rem,10vw,3.5rem)] leading-[1.02] tracking-[-.02em] sm:text-[clamp(3.25rem,5.5vw,5.5rem)]">
-            <span className="md:whitespace-nowrap">Capturing <i data-hero-gold className="text-white">Love,</i></span>
+            <span className="md:whitespace-nowrap">Visual Stories</span>
             <br />
-            <span className="md:whitespace-nowrap">Creating Memories.</span>
+            <span className="md:whitespace-nowrap">for People, <i data-hero-gold className="text-white">Brands</i></span>
+            <br />
+            <span className="md:whitespace-nowrap">&amp; Moments.</span>
           </h1>
-          <p data-hero-tagline className="mt-6 text-[13px] font-light tracking-[.22em] text-white/80 opacity-0 sm:mt-6 sm:text-[18px] sm:tracking-[.35em]">
-            That click, wow!
+          <p data-hero-tagline className="mt-6 max-w-[620px] text-sm font-light leading-7 text-white/80 opacity-0 sm:mt-6 sm:text-base sm:leading-7">
+            From intimate pre-wedding stories to corporate films, live events and artist visuals, we create photographs and films designed to be remembered.
           </p>
           <div className="mt-7 flex max-w-[620px] flex-col gap-3 sm:mt-12 sm:flex-row sm:gap-4">
             <div data-hero-button className="opacity-0">
@@ -70,8 +72,8 @@ export function Hero() {
               </MagneticButton>
             </div>
             <div data-hero-button className="opacity-0">
-              <MagneticButton href="/contact" arrowDirection="right" className="hero-button hero-button-secondary h-[56px] min-h-[56px] w-full justify-between border-white/70 px-7 text-[11px] tracking-[.14em] text-white hover:bg-white hover:text-ink sm:h-[60px] sm:min-h-[60px] sm:w-auto sm:gap-4 sm:px-10 sm:text-[13px]">
-                Book a shoot
+              <MagneticButton href="/services" arrowDirection="right" className="hero-button hero-button-secondary h-[56px] min-h-[56px] w-full justify-between border-white/70 px-7 text-[11px] tracking-[.14em] text-white hover:bg-white hover:text-ink sm:h-[60px] sm:min-h-[60px] sm:w-auto sm:gap-4 sm:px-10 sm:text-[13px]">
+                Our services
               </MagneticButton>
             </div>
           </div>
@@ -103,13 +105,13 @@ export function Hero() {
         data-hero-detail
         onClick={goToNextSection}
         className="absolute bottom-7 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center text-white/85 opacity-0 sm:flex"
-        aria-label="Scroll to explore"
+        aria-label="Scroll to services"
       >
         <span className="eyebrow mt-3 whitespace-nowrap text-[10px] tracking-[.25em]">Scroll to explore</span>
         <ChevronDown className="hero-chevron mt-2" size={15} strokeWidth={1} />
       </button>
 
-      <button type="button" onClick={goToNextSection} className="hero-scroll-mobile absolute bottom-7 right-6 z-10 flex min-h-11 items-center gap-2 text-white/75 sm:hidden" aria-label="Scroll to explore">
+      <button type="button" onClick={goToNextSection}       className="hero-scroll-mobile absolute bottom-7 right-6 z-10 flex min-h-11 items-center gap-2 text-white/75 sm:hidden" aria-label="Scroll to services">
         <span className="eyebrow text-[9px] tracking-[.16em]">Scroll</span><ArrowDown size={14} />
       </button>
     </section>

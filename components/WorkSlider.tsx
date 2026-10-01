@@ -117,11 +117,11 @@ export function WorkSlider() {
         <div className="work-title-group">
           <p className="work-kicker eyebrow">02 / Selected work</p>
           <h2 id="selected-work-heading" data-work-heading className="display text-[clamp(2.25rem,5vw,5.1rem)] leading-[.98] tracking-[-.025em]">
-            Love,<br />beautifully documented.
+            Stories we&apos;ve<br />had the privilege to tell.
           </h2>
         </div>
         <aside className="work-heading-aside">
-          <p>Wedding, pre-wedding and cinematic stories, photographed with feeling.</p>
+          <p>A selection of photographs and films created across weddings, brands, events and music.</p>
           <div className="work-story-count" aria-label={`Story ${active + 1} of ${works.length}`} aria-live="polite">
             <span>{String(active + 1).padStart(2, "0")}</span>
             <span className="work-story-count-total">/ {String(works.length).padStart(2, "0")} stories</span>
@@ -133,7 +133,7 @@ export function WorkSlider() {
         ref={slider.galleryRef}
         role="region"
         aria-roledescription="carousel"
-        aria-label="Selected wedding and pre-wedding stories"
+        aria-label="Selected photography and film stories"
         tabIndex={0}
         className="work-gallery relative mt-5 h-[48svh] min-h-[300px] max-h-[600px] w-full select-none sm:mt-8 sm:h-[52svh] lg:mt-5"
         onPointerDown={slider.onPointerDown}

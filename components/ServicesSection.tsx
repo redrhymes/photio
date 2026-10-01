@@ -117,10 +117,11 @@ export function ServicesSection() {
       <div ref={stageRef} className="services-stage mx-auto hidden">
         <div className="services-stage-heading">
           <span className="services-heading-rule" data-services-rule />
-          <p className="services-stage-label" data-services-label>03 / WHAT WE DO</p>
+          <p className="services-stage-label" data-services-label>WHAT WE DO</p>
           <h2 id="services-heading" data-services-heading className="display services-heading">
-            <span className="services-heading-word">Stories</span><i className="services-heading-word">worth</i><span className="services-heading-word">remembering.</span>
+            <span className="services-heading-word">Different stories.</span><i className="services-heading-word">One visual language.</i>
           </h2>
+          <p className="services-stage-description">We photograph and film the moments, people and ideas that matter — from personal celebrations to brands, live experiences and music.</p>
         </div>
         <RopeStage cards={serviceCards} />
         <ul className="services-card-list" aria-label="Photography services">
@@ -141,8 +142,9 @@ export function ServicesSection() {
       <div ref={mobileRef} className="services-mobile">
         <div className="services-mobile-heading">
           <span className="services-heading-rule" />
-          <p className="services-stage-label">03 / WHAT WE DO</p>
-          <h2 className="display services-heading"><span className="services-heading-word">Stories</span><i className="services-heading-word">worth</i><span className="services-heading-word">remembering.</span></h2>
+          <p className="services-stage-label">WHAT WE DO</p>
+          <h2 className="display services-heading"><span className="services-heading-word">Different stories.</span><i className="services-heading-word">One visual language.</i></h2>
+          <p className="services-stage-description">Photography and film for people, brands, live experiences and music.</p>
         </div>
         <div className="services-mobile-row-wrap">
           <ul className="services-card-list services-mobile-list" aria-label="Photography services">
@@ -160,7 +162,7 @@ export function ServicesSection() {
                 style={{ "--mobile-angle": `${[-6, 4, -3, 6][index]}deg` } as CSSProperties}
               >
                 <div className="services-mobile-sway">
-                  <Link href={`/services#${service.id}`} className="polaroid-paper group" aria-label={`${service.title.toLowerCase()}, view service`} data-cursor-label="VIEW">
+                  <Link href={service.href} className="polaroid-paper group" aria-label={`${service.title.toLowerCase()}, view service`} data-cursor-label="VIEW">
                     <span className="polaroid-photo-window">
                       <Image src={service.image} alt={service.alt} fill sizes="60vw" quality={75} className="polaroid-photo object-cover" />
                       <span className="polaroid-photo-vignette" aria-hidden="true" />

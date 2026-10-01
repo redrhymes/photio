@@ -5,9 +5,9 @@ import Image from "@/components/OptimizedImage";
 export type HeroSlideItem = { src: string; alt: string };
 
 export const heroSlides: HeroSlideItem[] = [
-  { src: "/images/home/hero1.png", alt: "A sunlit peach courtyard with sculpted arches and garden trees" },
-  { src: "/images/home/hero2.webp", alt: "A leafy outdoor wedding set beneath mature trees, dressed with white hanging decorations" },
-  { src: "/images/home/hero3.png", alt: "A flower-covered brick arch leading into a warm stone courtyard" },
+  { src: "/images/home/hero1.png", alt: "A visual production team working with a brand in a sunlit city studio" },
+  { src: "/images/home/hero2.png", alt: "A photographer capturing guests at an evening celebration" },
+  { src: "/images/home/hero3.png", alt: "A garden celebration setup framed by trees and hanging details" },
 ];
 
 export function HeroSlider({ activeIndex, isPaused, reducedMotion }: { activeIndex: number; isPaused: boolean; reducedMotion: boolean }) {

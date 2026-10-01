@@ -13,13 +13,13 @@ export function FinalCTASection() {
       ref={sectionRef}
       id="cta"
       data-theme="dark"
-      aria-label="Book your shoot"
+      aria-label="Start a project with Photio"
       className="final-cta-section"
     >
       <div className="cta-background-layer" aria-hidden="true">
         <div className="cta-background-image" data-cta-background-image>
           <Image
-            src="/images/home/cta.webp"
+            src="/images/portfolio/Event.jpg"
             alt=""
             fill
             sizes="(max-width: 1920px) 100vw, 1920px"
@@ -31,15 +31,15 @@ export function FinalCTASection() {
       <div className="cta-content">
         <h2 className="cta-heading">
           <span className="cta-heading-mask">
-            <span data-cta-headline-line>Let&apos;s tell</span>
+            <span data-cta-headline-line>Have a story</span>
           </span>
           <span className="cta-heading-mask">
             <span data-cta-headline-line>
-              your <i data-cta-highlight>love story.</i>
+              worth <i data-cta-highlight>telling?</i>
             </span>
           </span>
         </h2>
-        <p className="cta-tagline" data-cta-tagline>YOUR MOMENT. OUR FRAME.</p>
+        <p className="cta-tagline" data-cta-tagline>PHOTOGRAPHY &amp; FILM, MADE WITH INTENTION.</p>
         <div className="cta-primary-wrap">
           <MagneticButton
             href="/contact"
@@ -47,7 +47,7 @@ export function FinalCTASection() {
             className="cta-primary"
             arrow={false}
           >
-            <span>BOOK A SHOOT</span>
+            <span>START A PROJECT</span>
             <ArrowRight size={16} aria-hidden="true" />
           </MagneticButton>
         </div>

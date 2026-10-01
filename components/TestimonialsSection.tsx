@@ -1,13 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Star } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FramingPhotos } from "@/components/FramingPhotos";
 import { TestimonialQuote } from "@/components/TestimonialQuote";
 import { AvatarCarousel } from "@/components/AvatarCarousel";
-import { googleReviewsUrl, testimonials } from "@/components/testimonials";
+import { testimonials } from "@/components/testimonials";
 
 export function TestimonialsSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -36,11 +35,10 @@ export function TestimonialsSection() {
     const frames = section.querySelectorAll<HTMLElement>("[data-testimonial-frame]");
     const quoteMark = section.querySelector<HTMLElement>("[data-testimonial-mark]");
     const quoteLines = section.querySelectorAll<HTMLElement>("[data-testimonial-quote-line]");
-    const quoteEmphasis = section.querySelector<HTMLElement>(".testimonial-quote-emphasis");
     const attribution = section.querySelector<HTMLElement>("[data-testimonial-attribution]");
     const avatars = section.querySelectorAll<HTMLElement>("[data-testimonial-avatar]");
     const trust = section.querySelector<HTMLElement>("[data-testimonial-trust]");
-    if (!label || !rule || !quoteMark || !trust || !quoteEmphasis || !attribution) return;
+    if (!label || !rule || !quoteMark || !trust || !attribution) return;
 
     if (reducedMotion) {
       gsap.fromTo(section, { opacity: 0 }, {
@@ -75,18 +73,21 @@ export function TestimonialsSection() {
           duration: 0.5,
           stagger: 0.1,
           ease: "power2.out",
-        }, "-=.3")
-        .fromTo(quoteEmphasis, { filter: "grayscale(1)" }, {
+        }, "-=.3");
+      const quoteEmphasis = section.querySelector<HTMLElement>(".testimonial-quote-emphasis");
+      if (quoteEmphasis) {
+        timeline.fromTo(quoteEmphasis, { filter: "grayscale(1)" }, {
           filter: "grayscale(0)",
           duration: 0.55,
           ease: "power2.out",
-        }, "-=.1")
-        .fromTo(attribution, { opacity: 0, y: 12 }, {
-          opacity: 1,
-          y: 0,
-          duration: 0.55,
-          ease: "power3.out",
-        }, "-=.2")
+        }, "-=.1");
+      }
+      timeline.fromTo(attribution, { opacity: 0, y: 12 }, {
+        opacity: 1,
+        y: 0,
+        duration: 0.55,
+        ease: "power3.out",
+      }, "-=.2")
         .fromTo(avatars, { opacity: 0, y: 10 }, {
           opacity: 1,
           y: 0,
@@ -105,14 +106,6 @@ export function TestimonialsSection() {
         stagger: 1.3,
       });
 
-      const stars = section.querySelectorAll<HTMLElement>("[data-testimonial-star]");
-      gsap.fromTo(stars, { scale: 0.7 }, {
-        scale: 1,
-        duration: 0.35,
-        stagger: 0.1,
-        ease: "back.out(2)",
-        scrollTrigger: { trigger: trust, start: "top 90%", once: true, toggleActions: "play none none none" },
-      });
     }, section);
     return () => context.revert();
   }, []);
@@ -155,7 +148,7 @@ export function TestimonialsSection() {
       ref={sectionRef}
       id="testimonials"
       data-theme="light"
-      aria-label="Customer testimonials"
+      aria-label="Client feedback placeholders"
       className="testimonials-section"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -164,7 +157,7 @@ export function TestimonialsSection() {
       <FramingPhotos />
       <p className="testimonials-label" data-testimonial-label>
         <span className="testimonials-label-rule" data-testimonial-label-rule aria-hidden="true" />
-        <span>06 / &nbsp;KIND WORDS</span>
+        <span>07 / &nbsp;CLIENT PERSPECTIVES</span>
       </p>
 
       <div
@@ -200,30 +193,10 @@ export function TestimonialsSection() {
         />
       </div>
 
-      <div
-        className="testimonials-trust"
-        data-testimonial-trust
-      >
+      <div className="testimonials-trust" data-testimonial-trust>
         <div className="testimonial-trust-rule" aria-hidden="true" />
         <div className="testimonial-trust-row">
-          <div className="testimonial-rating" role="img" aria-label="Rated 5 out of 5 stars on Google">
-            <div className="testimonial-stars" aria-hidden="true">
-              {Array.from({ length: 5 }, (_, index) => (
-                <Star key={index} data-testimonial-star fill="currentColor" strokeWidth={0} />
-              ))}
-            </div>
-            <span>RATED 5 STARS ON GOOGLE</span>
-          </div>
-          <span className="testimonial-trust-divider" aria-hidden="true" />
-          <a
-            className="testimonial-reviews-link"
-            href={googleReviewsUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <span>READ OUR REVIEWS</span>
-            <span className="testimonial-reviews-arrow" aria-hidden="true">→</span>
-          </a>
+          <p className="testimonial-placeholder-note">Client-approved testimonials will be added here.</p>
         </div>
       </div>
     </section>

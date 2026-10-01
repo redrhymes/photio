@@ -10,79 +10,64 @@ export type Testimonial = {
   avatarImage: string;
 };
 
-// Add, remove, or reorder entries here. Update googleReviewsUrl to your
-// Google Business review URL when it is ready.
-export const googleReviewsUrl = "https://www.google.com/search?q=Photio+Noida+reviews";
-
 export const testimonials: Testimonial[] = [
   {
-    id: "aanya-rahul",
-    coupleNames: "AANYA & RAHUL",
-    location: "DELHI",
-    shootType: "WEDDING",
+    id: "weddings",
+    coupleNames: "[CLIENT NAME]",
+    location: "",
+    shootType: "WEDDINGS & PRE-WEDDING",
     quote: {
-      plain: "They didn't just capture our wedding. They captured",
-      emphasis: "how it felt.",
+      plain: "[Approved client feedback will appear here.]",
+      emphasis: "",
     },
-    avatarImage: "/images/portfolio/7.jpg",
+    avatarImage: "/images/home/work1.jpg",
   },
   {
-    id: "meera-arjun",
-    coupleNames: "MEERA & ARJUN",
-    location: "JAIPUR",
-    shootType: "PRE-WEDDING",
+    id: "brands",
+    coupleNames: "[CLIENT NAME]",
+    location: "",
+    shootType: "BRANDS & BUSINESSES",
     quote: {
-      plain: "Every photograph brought us right back to",
-      emphasis: "the joy of that day.",
+      plain: "[Approved client feedback will appear here.]",
+      emphasis: "",
     },
-    avatarImage: "/images/portfolio/16.webp",
+    avatarImage: "/images/portfolio/Promotional.jpg",
   },
   {
-    id: "priya-kartik",
-    coupleNames: "PRIYA & KARTIK",
-    location: "DELHI",
-    shootType: "WEDDING",
+    id: "events",
+    coupleNames: "[CLIENT NAME]",
+    location: "",
+    shootType: "LIVE EVENTS",
     quote: {
-      plain: "From the quiet moments to the celebrations, they understood",
-      emphasis: "what mattered to us.",
+      plain: "[Approved client feedback will appear here.]",
+      emphasis: "",
     },
-    avatarImage: "/images/portfolio/475416934_3480357045430756_3377981072329047463_n.jpg",
+    avatarImage: "/images/portfolio/Event.jpg",
   },
   {
-    id: "isha-kabir",
-    coupleNames: "ISHA & KABIR",
-    location: "NOIDA",
-    shootType: "WEDDING",
+    id: "music",
+    coupleNames: "[CLIENT NAME]",
+    location: "",
+    shootType: "MUSIC & ARTISTS",
     quote: {
-      plain: "We felt completely at ease, and every frame feels",
-      emphasis: "so unmistakably us.",
+      plain: "[Approved client feedback will appear here.]",
+      emphasis: "",
     },
-    avatarImage: "/images/portfolio/FB_IMG_1738766381528.jpg",
-  },
-  {
-    id: "sana-zain",
-    coupleNames: "SANA & ZAIN",
-    location: "AGRA",
-    shootType: "PRE-WEDDING",
-    quote: {
-      plain: "We will treasure these photographs for a lifetime; they are",
-      emphasis: "memories made tangible.",
-    },
-    avatarImage: "/images/portfolio/FB_IMG_1738766546744.jpg",
+    avatarImage: "/images/locations/musical-nights/mn1.jpg",
   },
 ];
 
 export const testimonialFramingImages = {
   leftMain: {
-    src: "/images/portfolio/1-process.webp",
-    alt: "A close wedding detail captured in warm light",
+    src: "/images/portfolio/Promotional.jpg",
+    alt: "",
   },
   leftBack: {
-    src: "/images/portfolio/FB_IMG_1738411095158.jpg",
+    src: "/images/portfolio/Event.jpg",
     alt: "",
   },
   right: {
-    src: "/images/portfolio/6.webp",
-    alt: "A couple together in a softly toned wedding portrait",
+    src: "/images/locations/musical-nights/mn1.jpg",
+    alt: "",
   },
 };

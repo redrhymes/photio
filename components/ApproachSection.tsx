@@ -2,15 +2,15 @@
 
 import { useApproachAnimation } from "@/components/useApproachAnimation";
 import { PhotoStack } from "@/components/PhotoStack";
-import { StatCounter, type IntroStat } from "@/components/StatCounter";
 
-const defaultStats: IntroStat[] = [
-  { value: 8, suffix: "+", label: "Years", detail: "of storytelling", padLength: 2 },
-  { value: 500, suffix: "+", label: "Couples", detail: "photographed" },
-  { value: 25, suffix: "+", label: "Cities", detail: "across India" },
+const principles = [
+  { title: "Understand", detail: "We start by listening to what matters to you." },
+  { title: "Plan", detail: "We shape a thoughtful plan around your story." },
+  { title: "Create", detail: "We capture with care, curiosity and intention." },
+  { title: "Deliver", detail: "We craft the final photographs and films with care." },
 ];
 
-export function ApproachSection({ stats = defaultStats }: { stats?: IntroStat[] }) {
+export function ApproachSection() {
   const sectionRef = useApproachAnimation();
 
   return (
@@ -25,29 +25,34 @@ export function ApproachSection({ stats = defaultStats }: { stats?: IntroStat[] 
 
       <div className="approach-label" data-approach-label>
         <span className="approach-label-line" data-approach-label-line />
-        <span>01 / &nbsp;THE PHOTIO APPROACH</span>
+        <span>03 / &nbsp;THE PHOTIO APPROACH</span>
       </div>
 
       <div className="approach-content">
         <div className="approach-copy">
           <h2 id="approach-heading" className="approach-heading display" data-approach-heading>
-            <span>Some moments</span>
-            <span>deserve more than</span>
-            <span>a photograph.</span>
-            <span className="approach-heading-second">They deserve a <i data-approach-feeling>feeling</i></span>
-            <span className="approach-heading-indent">you can return to.</span>
+            <span>Every project</span>
+            <span>begins with a</span>
+            <span><i data-approach-feeling>story.</i></span>
           </h2>
+          <p className="approach-intro" data-approach-note>
+            We take the time to understand your people, purpose and point of view, then create images and films that feel true to it.
+          </p>
         </div>
 
         <PhotoStack />
       </div>
 
-      <div className="approach-stats" data-approach-stats>
+      <div className="approach-stats approach-principles">
         <div className="approach-stats-grid">
-          {stats.map((stat, index) => (
-            <div className="approach-stat-cell" key={`${stat.label}-${stat.detail}`}>
-              <StatCounter {...stat} className="approach-stat" />
-              {index < stats.length - 1 && <span className="approach-stat-divider" data-approach-divider aria-hidden="true" />}
+          {principles.map((principle, index) => (
+            <div className="approach-stat-cell" key={principle.title}>
+              <div className="approach-principle">
+                <span className="approach-principle-index">0{index + 1}</span>
+                <h3>{principle.title}</h3>
+                <p>{principle.detail}</p>
+              </div>
+              {index < principles.length - 1 && <span className="approach-stat-divider" data-approach-divider aria-hidden="true" />}
             </div>
           ))}
         </div>

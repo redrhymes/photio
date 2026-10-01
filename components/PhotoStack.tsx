@@ -5,8 +5,6 @@ import Image from "@/components/OptimizedImage";
 export function PhotoStack() {
   return (
     <div className="approach-photo-stack" data-approach-stack>
-      <span className="approach-flower approach-flower-top" aria-hidden="true" />
-      <span className="approach-flower approach-flower-bottom" aria-hidden="true" />
       <svg className="approach-photo-arc" viewBox="0 0 420 480" fill="none" aria-hidden="true">
         <path
           data-approach-arc
@@ -18,8 +16,8 @@ export function PhotoStack() {
       </svg>
       <div className="approach-photo approach-photo-back" data-approach-back>
         <Image
-          src="/images/portfolio/7.jpg"
-          alt="A warm, intimate portrait from a wedding celebration"
+          src="/images/home/about2.png"
+          alt="A Photio photographer capturing a portrait during a studio shoot"
           fill
           sizes="(max-width: 767px) 0px, (max-width: 1279px) 30vw, 20vw"
           quality={85}
@@ -28,14 +26,14 @@ export function PhotoStack() {
       </div>
       <div className="approach-photo approach-photo-front" data-approach-front>
         <Image
-          src="/images/portfolio/11.webp"
-          alt="Bride in warm golden light beneath a decorative arch"
+          src="/images/home/about.png"
+          alt="Photio's photography team collaborating during a shoot"
           fill
           sizes="(max-width: 767px) 69vw, (max-width: 1279px) 40vw, 26vw"
           quality={85}
           className="approach-photo-image"
         />
-        <span className="approach-photo-script" aria-hidden="true">Real Moments</span>
+        <span className="approach-photo-script" aria-hidden="true">Every Story</span>
       </div>
     </div>
   );

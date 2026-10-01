@@ -49,7 +49,7 @@ export function AvatarCarousel({
                   order: (index - activeIndex + Math.floor(items.length / 2) + items.length) % items.length,
                 }}
                 onClick={() => onSelect(index)}
-                aria-label={`View testimonial from ${item.coupleNames}`}
+                aria-label={`View feedback placeholder for ${item.shootType}`}
                 aria-pressed={isActive}
               >
                 <Image

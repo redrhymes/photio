@@ -1,17 +1,16 @@
 export type Work = {
   slug: string;
-  coupleNames: string;
+  title: string;
   city: string;
   shootType: string;
   image: string;
   alt: string;
 };
 
-// Empty names omit the couple line, keeping bracket placeholders out of every caption.
 export const works: Work[] = [
   {
     slug: "aanya-rahul",
-    coupleNames: "",
+    title: "Pre-Wedding Story",
     city: "Jaipur",
     shootType: "PRE-WEDDING",
     image: "/images/home/work1.jpg",
@@ -19,42 +18,42 @@ export const works: Work[] = [
   },
   {
     slug: "meera-arjun",
-    coupleNames: "",
-    city: "Udaipur",
-    shootType: "PRE-WEDDING",
+    title: "Wedding Story",
+    city: "Jaipur",
+    shootType: "WEDDING",
     image: "/images/home/work2.jpg",
     alt: "A couple framed by ornate sandstone arches",
   },
   {
+    slug: "studio-01",
+    title: "Corporate Brand Visuals",
+    city: "",
+    shootType: "CORPORATE",
+    image: "/images/home/about2.png",
+    alt: "A photographer capturing a portrait during a studio shoot",
+  },
+  {
+    slug: "after-hours",
+    title: "Live Event Coverage",
+    city: "",
+    shootType: "EVENTS",
+    image: "/images/portfolio/Event.jpg",
+    alt: "A live event captured in photographs",
+  },
+  {
+    slug: "live-music-session",
+    title: "Artist Performance",
+    city: "",
+    shootType: "MUSIC",
+    image: "/images/locations/musical-nights/mn1.jpg",
+    alt: "An artist performing beneath warm stage lights",
+  },
+  {
     slug: "isha-kabir",
-    coupleNames: "",
+    title: "Cinematic Story",
     city: "Delhi",
     shootType: "CINEMATIC",
     image: "/images/home/work3.jpg",
-    alt: "A couple in silhouette beneath an orange sunset",
-  },
-  {
-    slug: "tara-veer",
-    coupleNames: "",
-    city: "Jodhpur",
-    shootType: "WEDDING",
-    image: "/images/home/work4.jpg",
-    alt: "A couple in traditional attire inside a painted palace corridor",
-  },
-  {
-    slug: "sana-zain",
-    coupleNames: "",
-    city: "Jaipur",
-    shootType: "CANDID",
-    image: "/images/home/work5.jpg",
-    alt: "A joyful low-angle portrait of a couple forming a heart with their arms",
-  },
-  {
-    slug: "noor-dev",
-    coupleNames: "",
-    city: "Udaipur",
-    shootType: "WEDDING",
-    image: "/images/home/work6.jpg",
-    alt: "A couple seated together in front of an ornate palace facade",
+    alt: "A cinematic story captured at sunset",
   },
 ];

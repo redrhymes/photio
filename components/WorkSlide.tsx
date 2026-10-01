@@ -15,7 +15,7 @@ export function WorkSlide({
   active: boolean;
   onMeasure: (element: HTMLAnchorElement | null, index: number) => void;
 }) {
-  const accessibleName = [work.coupleNames, work.city, work.shootType.toLowerCase()].filter(Boolean).join(", ");
+  const accessibleName = [work.title, work.city, work.shootType.toLowerCase()].filter(Boolean).join(", ");
   return (
     <Link
       ref={(element) => onMeasure(element, index)}
@@ -38,7 +38,7 @@ export function WorkSlide({
       />
       <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
       <span className={`work-caption pointer-events-none absolute bottom-5 left-5 transition-all duration-500 sm:bottom-7 sm:left-7 ${active ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"} max-md:translate-y-0 max-md:opacity-100`}>
-        {work.coupleNames && <span className="eyebrow block text-[10px] tracking-[.24em] sm:text-xs">{work.coupleNames}</span>}
+        {work.title && <span className="eyebrow block text-[10px] tracking-[.24em] sm:text-xs">{work.title}</span>}
         {(work.city || work.shootType) && <span className="eyebrow mt-2 block text-[9px] tracking-[.2em] text-white/75 sm:text-[10px]">{[work.city, work.shootType].filter(Boolean).join(" — ")}</span>}
         <span className="mt-4 block h-px w-7 bg-white/80" />
       </span>

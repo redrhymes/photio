@@ -541,9 +541,9 @@ button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
     right: 7%;
     bottom: 6%;
     left: 7%;
-    column-gap: 10px;
-    row-gap: 8px;
-    min-height: 26%;
+    column-gap: 8px;
+    row-gap: 6px;
+    min-height: 28%;
   }
   .services-mobile-item .polaroid-index {
     padding-top: 2px;
@@ -551,9 +551,9 @@ button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
   }
   .services-mobile-item .polaroid-caption-rule { width: 32px; }
   .services-mobile-item .polaroid-title {
-    font-size: clamp(19px, 5.5vw, 25px);
-    line-height: 1;
-    letter-spacing: .025em;
+    font-size: clamp(17px, 4.8vw, 22px);
+    line-height: 1.04;
+    letter-spacing: .015em;
   }
   .services-mobile-item .polaroid-arrow { width: 24px; height: 24px; }
   .services-mobile-item .polaroid-photo { filter: sepia(.04) contrast(1.04) saturate(1.03); }
@@ -4462,6 +4462,68 @@ header[data-nav-theme="light"] .nav-book {
     text-transform: none;
   }
   .approach-stat-divider { display: block; height: 48px; }
+}
+
+.approach-heading > span { white-space: normal; }
+.approach-intro {
+  max-width: 48ch;
+  margin: 26px 0 0;
+  color: var(--approach-muted);
+  font-size: clamp(14px, 1.1vw, 17px);
+  line-height: 1.75;
+}
+.approach-stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.approach-principles .approach-stat-cell {
+  align-items: flex-start;
+  padding: 4px 5% 0 0;
+}
+.approach-principles .approach-stat-cell + .approach-stat-cell { padding-left: 6%; }
+.approach-principle-index {
+  color: var(--approach-bronze);
+  font-size: 10px;
+  letter-spacing: .16em;
+}
+.approach-principle h3 {
+  margin: 14px 0 8px;
+  color: var(--approach-ink);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 400;
+}
+.approach-principle p {
+  max-width: 24ch;
+  margin: 0;
+  color: var(--approach-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.services-stage-description {
+  max-width: 570px;
+  margin: 20px auto 0;
+  color: rgba(255,255,255,.68);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.testimonial-placeholder-note {
+  margin: 0;
+  color: inherit;
+  font-size: 11px;
+  letter-spacing: .12em;
+  opacity: .72;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+  .approach-heading { text-align: center; }
+  .approach-intro { margin: 20px auto 0; text-align: center; }
+  .approach-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 24px; }
+  .approach-principles .approach-stat-cell,
+  .approach-principles .approach-stat-cell + .approach-stat-cell { padding: 0 10px; }
+  .approach-principles .approach-stat-divider { display: none; }
+  .approach-principle h3 { margin-top: 8px; font-size: 23px; }
+  .approach-principle p { font-size: 12px; }
+  .services-stage-description { max-width: 36ch; margin-top: 14px; font-size: 13px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .approach-photo-stack,

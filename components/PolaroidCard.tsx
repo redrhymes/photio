@@ -56,7 +56,7 @@ export function PolaroidCard({
       }}
     >
       <div className="services-card-sway">
-        <Link href={`/services#${service.id}`} className="polaroid-paper group" aria-label={`${service.title.toLowerCase()}, view service`} data-cursor-label="VIEW">
+        <Link href={service.href} className="polaroid-paper group" aria-label={`${service.title.toLowerCase()}, view service`} data-cursor-label="VIEW">
           <span className="polaroid-photo-window">
             <Image
               ref={photoRef}

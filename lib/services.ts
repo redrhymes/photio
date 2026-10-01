@@ -9,6 +9,7 @@ export type ServiceCard = {
   rotation: number;
   image: string;
   alt: string;
+  href: string;
 };
 
 export type ServiceStory = {
@@ -34,18 +35,20 @@ export const serviceCards: ServiceCard[] = [
     rotation: 11,
     image: "/images/home/work1.jpg",
     alt: "A couple sharing a warm, intimate pre-wedding moment",
+    href: "/services/pre-wedding",
   },
   {
     id: "corporate",
     number: "02",
-    title: "CORPORATE PHOTO & VIDEO",
+    title: "CORPORATE PHOTO & VIDEOGRAPHY",
     titleLines: ["CORPORATE", "PHOTO & VIDEO"],
     pinX: 39.9,
     pinY: 24.8,
     width: 16.8,
     rotation: 7,
-    image: "/images/portfolio/Promotional.jpg",
-    alt: "A thoughtfully composed photograph of a modern studio workspace",
+    image: "/images/home/service2.png",
+    alt: "A corporate portrait session photographed in a professional studio",
+    href: "/services/corporate",
   },
   {
     id: "events",
@@ -58,18 +61,20 @@ export const serviceCards: ServiceCard[] = [
     rotation: -10,
     image: "/images/portfolio/Event.jpg",
     alt: "A celebration venue lit for an evening event",
+    href: "/services/events",
   },
   {
     id: "music",
     number: "04",
-    title: "MUSIC ALBUMS",
-    titleLines: ["MUSIC ALBUMS"],
+    title: "MUSIC ALBUMS & ARTIST VISUALS",
+    titleLines: ["MUSIC & ARTIST", "VISUALS"],
     pinX: 87.6,
     pinY: 21.7,
     width: 15.5,
     rotation: 4,
     image: "/images/locations/musical-nights/mn1.jpg",
     alt: "A musician performing under warm stage lights",
+    href: "/services/music-albums",
   },
 ];
 
@@ -87,7 +92,7 @@ export const serviceStories: ServiceStory[] = [
     number: "02",
     title: "Corporate photo & video",
     description: "Visual stories for brands, teams, launches and campaigns.",
-    image: "/images/portfolio/Promotional.jpg",
+    image: "/images/home/service2.png",
     href: "/services/corporate",
   },
   {

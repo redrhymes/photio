@@ -23,18 +23,10 @@ export function useApproachAnimation() {
     const script = section.querySelector<HTMLElement>(".approach-photo-script");
     const feeling = section.querySelector<HTMLElement>("[data-approach-feeling]");
     const dividers = section.querySelectorAll<HTMLElement>("[data-approach-divider]");
-    const counters = section.querySelectorAll<HTMLElement>("[data-count-target]");
     if (!heading || !label || !labelLine || !back || !front || !arc || !script || !feeling) return;
 
-    const finishCounters = () => counters.forEach((counter) => {
-      const value = Number(counter.dataset.countTarget ?? 0);
-      const padding = Number(counter.dataset.countPad ?? 0);
-      counter.textContent = String(value).padStart(padding, "0");
-    });
-
     if (reducedMotion) {
-      finishCounters();
-      gsap.set([label, labelLine, note, back, front, script, ...dividers], { clearProps: "all" });
+      gsap.set([label, labelLine, ...(note ? [note] : []), back, front, script, ...dividers], { clearProps: "all" });
       arc.style.strokeDashoffset = "0";
       return;
     }
@@ -103,20 +95,6 @@ export function useApproachAnimation() {
           photoSectionEntered = true;
           startPhotoReveal();
         },
-      });
-
-      counters.forEach((counter) => {
-        const target = Number(counter.dataset.countTarget ?? 0);
-        const padding = Number(counter.dataset.countPad ?? 0);
-        const state = { value: 0 };
-        timeline.fromTo(state, { value: 0 }, {
-          value: target,
-          duration: 1.8,
-          ease: "power2.out",
-          onUpdate: () => {
-            counter.textContent = String(Math.round(state.value)).padStart(padding, "0");
-          },
-        }, "-=.25");
       });
 
       gsap.to([back, front], {

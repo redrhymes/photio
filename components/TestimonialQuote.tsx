@@ -59,14 +59,14 @@ export function TestimonialQuote({
           >
             <blockquote className="testimonial-blockquote">
               <p ref={quoteTextRef} className="testimonial-quote-text">
-                “{testimonial.quote.plain}{" "}
-                <i className="testimonial-quote-emphasis">{testimonial.quote.emphasis}</i>”
+                {testimonial.quote.plain}{" "}
+                {testimonial.quote.emphasis && (
+                  <i className="testimonial-quote-emphasis">{testimonial.quote.emphasis}</i>
+                )}
               </p>
               <footer className="testimonial-attribution" data-testimonial-attribution>
                 <cite className="testimonial-couple">{testimonial.coupleNames}</cite>
-                <span className="testimonial-location">
-                  {testimonial.location} — {testimonial.shootType}
-                </span>
+                <span className="testimonial-location">{[testimonial.location, testimonial.shootType].filter(Boolean).join(" — ")}</span>
                 <span className="testimonial-attribution-rule" aria-hidden="true" />
               </footer>
             </blockquote>
