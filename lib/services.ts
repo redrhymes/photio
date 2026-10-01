@@ -11,6 +11,15 @@ export type ServiceCard = {
   alt: string;
 };
 
+export type ServiceStory = {
+  id: string;
+  number: string;
+  title: string;
+  description: string;
+  image: string;
+  href: string;
+};
+
 // Pin coordinates and width are cqw values measured against the 1672px reference canvas.
 // Append ?debug=1 to the homepage to compare the pin and pivot crosshairs while nudging these values.
 export const serviceCards: ServiceCard[] = [
@@ -35,7 +44,7 @@ export const serviceCards: ServiceCard[] = [
     pinY: 24.8,
     width: 16.8,
     rotation: 7,
-    image: "/images/portfolio/Corporate.jpg",
+    image: "/images/portfolio/Promotional.jpg",
     alt: "A thoughtfully composed photograph of a modern studio workspace",
   },
   {
@@ -61,5 +70,40 @@ export const serviceCards: ServiceCard[] = [
     rotation: 4,
     image: "/images/locations/musical-nights/mn1.jpg",
     alt: "A musician performing under warm stage lights",
+  },
+];
+
+export const serviceStories: ServiceStory[] = [
+  {
+    id: "wedding",
+    number: "01",
+    title: "Pre-wedding & wedding",
+    description: "From quiet pre-wedding moments to the full energy of your wedding day.",
+    image: "/images/home/work1.jpg",
+    href: "/services/pre-wedding",
+  },
+  {
+    id: "corporate",
+    number: "02",
+    title: "Corporate photo & video",
+    description: "Visual stories for brands, teams, launches and campaigns.",
+    image: "/images/portfolio/Promotional.jpg",
+    href: "/services/corporate",
+  },
+  {
+    id: "events",
+    number: "03",
+    title: "Events",
+    description: "Candid coverage that captures the atmosphere, people and moments.",
+    image: "/images/portfolio/Event.jpg",
+    href: "/services/events",
+  },
+  {
+    id: "music",
+    number: "04",
+    title: "Music albums",
+    description: "Cinematic visual storytelling for artists, musicians and music projects.",
+    image: "/images/locations/musical-nights/mn1.jpg",
+    href: "/services/music-albums",
   },
 ];

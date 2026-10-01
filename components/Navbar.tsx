@@ -58,7 +58,7 @@ export function Navbar() {
     setTheme("dark");
     const lightSections = Array.from(
       document.querySelectorAll<HTMLElement>(
-        "main #approach[data-theme='light'], main #process[data-theme='light'], main #testimonials[data-theme='light']",
+        "main #approach[data-theme='light'], main #process[data-theme='light'], main #testimonials[data-theme='light'], main #services-list[data-theme='light'], main #experience[data-theme='light'], main .service-detail-offerings, main .service-detail-ideas",
       ),
     );
     if (!lightSections.length) return;

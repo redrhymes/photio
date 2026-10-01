@@ -62,7 +62,8 @@ export function useFeaturedStoryTransition(total: number) {
     const heading = section.querySelector<HTMLElement>("[data-featured-heading]");
     const highlight = section.querySelector<HTMLElement>("[data-featured-highlight]");
     const details = section.querySelectorAll<HTMLElement>("[data-featured-detail]");
-    if (!eyebrow || !eyebrowLine || !heading || !highlight) return;
+    const caption = section.querySelector<HTMLElement>("[data-featured-caption]");
+    if (!eyebrow || !eyebrowLine || !heading || !highlight || !caption) return;
 
     const split = new SplitText(heading, { type: "lines", linesClass: "featured-story-line-mask" });
     splitRef.current = split;
@@ -86,12 +87,18 @@ export function useFeaturedStoryTransition(total: number) {
         }, "-=.05")
         .fromTo(highlight, { filter: "grayscale(1)" }, { filter: "grayscale(0)", duration: 0.6         }, "-=.3")
         .fromTo(details, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.55, stagger: 0.12, ease: "power3.out" }, "-=.25")
-        .fromTo(imageStage, { clipPath: "inset(0 0 0 100%)", scale: 1.12 }, {
+        .fromTo(imageStage, { clipPath: "inset(0 0 0 100%)", scale: 1.05 }, {
           clipPath: "inset(0 0 0 0)",
           scale: 1,
           duration: 1.3,
           ease: "power3.inOut",
-        }, "-=1.3");
+        }, "-=1.3")
+        .fromTo(caption, { opacity: 0, y: 8 }, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power3.out",
+        }, "-=.35");
     }, section);
 
     return () => {

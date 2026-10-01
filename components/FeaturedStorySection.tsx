@@ -75,34 +75,46 @@ export function FeaturedStorySection() {
         <p className="featured-story-description" data-featured-detail>{story.description}</p>
       </div>
 
-      <div className="featured-story-image-stage" ref={imageStageRef} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-        <AnimatePresence mode="sync" initial={false}>
+      <div className="featured-story-visual">
+        <div className="featured-story-image-stage" ref={imageStageRef} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+          <AnimatePresence mode="sync" initial={false}>
+            <motion.div
+              key={story.slug}
+              className="featured-story-image-layer"
+              initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 1.02 }}
+              transition={{ duration: prefersReducedMotion ? 0.25 : 0.6, ease: "easeInOut" }}
+            >
+              <Image
+                src={story.heroImage}
+                alt={`${story.couple}, ${story.shootType.toLowerCase()} in ${story.location}. ${story.description}`}
+                fill
+                loading="eager"
+                sizes="(max-width: 767px) calc(100vw - 36px), 72vw"
+                className="featured-story-image"
+              />
+              <div className="featured-story-image-shade" aria-hidden="true" />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+        <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={story.slug}
-            className="featured-story-image-layer"
-            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 1.03 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 1.02 }}
-            transition={{ duration: prefersReducedMotion ? 0.25 : 0.6, ease: "easeInOut" }}
+            className="featured-story-image-caption"
+            data-featured-caption
+            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: prefersReducedMotion ? 0 : -5 }}
+            transition={{ duration: prefersReducedMotion ? 0.2 : 0.35, ease: "easeOut" }}
           >
-            <Image
-              src={story.heroImage}
-              alt={`${story.couple}, ${story.shootType.toLowerCase()} in ${story.location}. ${story.description}`}
-              fill
-              loading="eager"
-              sizes="(max-width: 767px) 100vw, (max-width: 1279px) 100vw, 72vw"
-              className="featured-story-image"
-            />
-            <div className="featured-story-image-shade" aria-hidden="true" />
-            <div className="featured-story-image-caption">
-              <div>
-                <p>{story.location}</p>
-                <span>{story.shootType}</span>
-              </div>
-              <Link href={`/portfolio/${story.slug}`} aria-label={`View full story: ${story.couple}`}>
-                View full story <ArrowRight size={15} aria-hidden="true" />
-              </Link>
+            <div>
+              <p>{story.location}</p>
+              <span>{story.shootType}</span>
             </div>
+            <Link href={`/portfolio/${story.slug}`} aria-label={`View full story: ${story.couple}`}>
+              View full story <ArrowRight size={15} aria-hidden="true" />
+            </Link>
           </motion.div>
         </AnimatePresence>
       </div>
