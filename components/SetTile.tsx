@@ -85,7 +85,7 @@ export function SetTile({
             src={tile.image}
             alt={tile.alt}
             fill
-            sizes="(max-width: 899px) 50vw, (max-width: 2400px) 43vw, 1037px"
+            sizes={`(max-width: 899px) ${tile.slug === "bali-vibes" || tile.slug === "moroccan-fort" ? "100vw" : "50vw"}, (max-width: 2400px) 43vw, 1037px`}
             quality={75}
             loading="lazy"
             className="set-tile-image"

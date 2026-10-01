@@ -3,7 +3,7 @@
 import Image from "@/components/OptimizedImage";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { CSSProperties, UIEvent } from "react";
+import type { CSSProperties } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Clothespin } from "@/components/Clothespin";
@@ -12,22 +12,10 @@ import { RopeStage } from "@/components/RopeStage";
 import { useSway } from "@/components/useSway";
 import { serviceCards } from "@/lib/services";
 
-function Sprig({ className = "" }: { className?: string }) {
-  return (
-    <svg className={`services-sprig ${className}`} viewBox="0 0 76 112" aria-hidden="true">
-      <path d="M8 106C26 80 38 54 65 8" fill="none" stroke="#a88748" strokeWidth="1.5" />
-      <path d="M22 83C7 79 4 71 5 63c11 1 18 7 17 20Zm13-23c-1-13 5-19 14-23 4 10-1 18-14 23Zm13-24c-1-12 5-18 14-21 4 9-2 16-14 21Z" fill="#cbb78b" />
-      <circle cx="65" cy="8" r="3" fill="#e8d8b2" />
-      <circle cx="59" cy="14" r="2.4" fill="#d1b98a" />
-    </svg>
-  );
-}
-
 export function ServicesSection() {
   const { sectionRef, setPaused } = useSway(serviceCards);
   const [debug, setDebug] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
-  const [mobileIndex, setMobileIndex] = useState(0);
   const stageRef = useRef<HTMLDivElement>(null);
   const mobileRef = useRef<HTMLDivElement>(null);
 
@@ -124,23 +112,6 @@ export function ServicesSection() {
     setPaused(index, active);
   }, [setPaused]);
 
-  const updateMobileIndex = useCallback((event: UIEvent<HTMLUListElement>) => {
-    const row = event.currentTarget;
-    const center = row.scrollLeft + row.clientWidth / 2;
-    const cards = Array.from(row.querySelectorAll<HTMLElement>("[data-service-card]"));
-    let closestIndex = 0;
-    let closestDistance = Number.POSITIVE_INFINITY;
-    cards.forEach((card, index) => {
-      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-      const distance = Math.abs(cardCenter - center);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = index;
-      }
-    });
-    setMobileIndex(closestIndex);
-  }, []);
-
   return (
     <section
       ref={sectionRef}
@@ -159,8 +130,6 @@ export function ServicesSection() {
           </h2>
         </div>
         <RopeStage cards={serviceCards} />
-        <Sprig className="services-desktop-sprig services-sprig-one" />
-        <Sprig className="services-desktop-sprig services-sprig-two" />
         <ul className="services-card-list" aria-label="Photography services">
           {serviceCards.map((service, index) => (
             <PolaroidCard key={service.id} service={service} index={index} onHoverChange={onHoverChange} />
@@ -183,13 +152,11 @@ export function ServicesSection() {
           <h2 className="display services-heading"><span className="services-heading-word">Stories</span><i className="services-heading-word">worth</i><span className="services-heading-word">remembering.</span></h2>
         </div>
         <div className="services-mobile-row-wrap">
-          <Sprig className="services-mobile-sprig services-mobile-sprig-start" />
-          <Sprig className="services-mobile-sprig services-mobile-sprig-end" />
-          <ul className="services-card-list services-mobile-list" aria-label="Photography services" onScroll={updateMobileIndex}>
+          <ul className="services-card-list services-mobile-list" aria-label="Photography services">
             <li className="services-mobile-rope-item" aria-hidden="true">
-              <svg className="services-mobile-rope" viewBox="0 0 1600 180" preserveAspectRatio="none">
-                <path d="M0 42 C280 42 320 148 610 148 S900 34 1200 34 S1400 120 1600 40" fill="none" stroke="#C9975E" strokeWidth="5" />
-                <path d="M0 44 C280 44 320 150 610 150 S900 36 1200 36 S1400 122 1600 42" fill="none" stroke="#704c2e" strokeWidth="1.5" strokeDasharray="2 7" />
+              <svg className="services-mobile-rope" viewBox="0 0 400 1800" preserveAspectRatio="none">
+                <path d="M210 0 C210 115 120 155 110 250 S285 365 280 470 S105 590 115 700 S285 815 280 925 S105 1040 115 1150 S285 1265 280 1375 S130 1510 205 1620 L205 1800" fill="none" stroke="#C9975E" strokeWidth="5" vectorEffect="non-scaling-stroke" />
+                <path d="M210 0 C210 115 120 155 110 250 S285 365 280 470 S105 590 115 700 S285 815 280 925 S105 1040 115 1150 S285 1265 280 1375 S130 1510 205 1620 L205 1800" fill="none" stroke="#704c2e" strokeWidth="1.5" strokeDasharray="2 7" vectorEffect="non-scaling-stroke" />
               </svg>
             </li>
             {serviceCards.map((service, index) => (
@@ -218,7 +185,6 @@ export function ServicesSection() {
             ))}
           </ul>
         </div>
-        <p className="services-mobile-counter" aria-live="polite">{String(mobileIndex + 1).padStart(2, "0")} / {String(serviceCards.length).padStart(2, "0")}</p>
       </div>
     </section>
   );

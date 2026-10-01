@@ -35,7 +35,7 @@ export function Hero() {
     <section
       ref={heroRef}
       data-theme="dark"
-      className="relative flex h-[100svh] min-h-[560px] w-full items-end overflow-hidden bg-ink text-white md:min-h-[650px] sm:items-center"
+      className="hero-section relative flex h-[100svh] min-h-[560px] w-full items-end overflow-hidden bg-ink text-white md:min-h-[650px] sm:items-center"
       aria-label="Photio wedding and pre-wedding photography"
       onPointerEnter={(event) => { if (event.pointerType === "mouse") setIsPaused(true); }}
       onPointerLeave={(event) => { if (event.pointerType === "mouse") setIsPaused(false); }}
@@ -109,7 +109,7 @@ export function Hero() {
         <ChevronDown className="hero-chevron mt-2" size={15} strokeWidth={1} />
       </button>
 
-      <button type="button" onClick={goToNextSection} className="absolute bottom-7 right-6 z-10 flex min-h-11 items-center gap-2 text-white/75 sm:hidden" aria-label="Scroll to explore">
+      <button type="button" onClick={goToNextSection} className="hero-scroll-mobile absolute bottom-7 right-6 z-10 flex min-h-11 items-center gap-2 text-white/75 sm:hidden" aria-label="Scroll to explore">
         <span className="eyebrow text-[9px] tracking-[.16em]">Scroll</span><ArrowDown size={14} />
       </button>
     </section>

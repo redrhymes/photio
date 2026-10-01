@@ -56,7 +56,7 @@ export function TimelinePath() {
     <svg
       ref={svgRef}
       className="process-timeline-path"
-      viewBox="0 0 180 1000"
+      viewBox="0 -24 180 1048"
       preserveAspectRatio="none"
       aria-hidden="true"
     >

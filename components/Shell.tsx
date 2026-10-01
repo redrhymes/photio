@@ -11,7 +11,6 @@ import { ScrollEffects } from "@/components/ScrollEffects";
 export function Shell({ children }: { children: ReactNode }) {
   return (
     <>
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[300] focus:bg-paper focus:p-4 focus:text-ink">Skip to content</a>
       <div data-scroll-progress className="fixed left-0 right-0 top-0 z-[70] h-[2px] origin-left scale-x-0 bg-champagne" />
       <Navbar />
       <Preloader />
