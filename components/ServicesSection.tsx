@@ -6,7 +6,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Clothespin } from "@/components/Clothespin";
 import { PolaroidCard } from "@/components/PolaroidCard";
 import { RopeStage } from "@/components/RopeStage";
 import { useSway } from "@/components/useSway";
@@ -34,10 +33,9 @@ export function ServicesSection() {
     const rope = section.querySelector<HTMLElement>(".services-rope-reveal");
     const words = section.querySelectorAll<HTMLElement>(".services-heading-word");
     const cards = Array.from(section.querySelectorAll<HTMLElement>(".services-stage [data-service-card]"));
-    const pins = section.querySelectorAll<HTMLElement>(".services-pin-front");
 
     if (reducedMotion) {
-      gsap.set([line, label, rope, ...cards, ...pins], { clearProps: "all" });
+      gsap.set([line, label, rope, ...cards], { clearProps: "all" });
       cards.forEach((card, index) => gsap.set(card, { rotation: serviceCards[index].rotation, opacity: 1, y: 0 }));
       return;
     }
@@ -82,11 +80,6 @@ export function ServicesSection() {
         stagger: .1,
         ease: "power3.out",
       }, .35);
-      timeline.fromTo(pins, { opacity: 0 }, {
-        opacity: 1,
-        duration: .3,
-        stagger: .06,
-      }, .55);
     }, section);
 
     return () => {
@@ -167,7 +160,6 @@ export function ServicesSection() {
                 style={{ "--mobile-angle": `${[-6, 4, -3, 6][index]}deg` } as CSSProperties}
               >
                 <div className="services-mobile-sway">
-                  <Clothespin />
                   <Link href={`/services#${service.id}`} className="polaroid-paper group" aria-label={`${service.title.toLowerCase()}, view service`} data-cursor-label="VIEW">
                     <span className="polaroid-photo-window">
                       <Image src={service.image} alt={service.alt} fill sizes="60vw" quality={75} className="polaroid-photo object-cover" />
