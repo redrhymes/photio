@@ -26,9 +26,12 @@ export function PortfolioGrid() {
             <AnimatePresence mode="popLayout">
               {shown.map((project, index) => {
                 const title = project.title.startsWith("[")
-                  ? `Wedding story ${String(index + 1).padStart(2, "0")}`
+                  ? `Project story ${String(index + 1).padStart(2, "0")}`
                   : project.title;
-                const location = project.location.startsWith("[") ? "Across India" : project.location;
+                const location = project.location.startsWith("[") || project.location === "Location not listed"
+                  ? ""
+                  : project.location;
+                const meta = [location, project.shootType].filter(Boolean).join(" — ");
 
                 return (
                   <motion.article
@@ -42,11 +45,11 @@ export function PortfolioGrid() {
                     className={`portfolio-gallery-item portfolio-gallery-item-${index % 9}`}
                   >
                     <Link href={`/portfolio/${project.slug}`} className="portfolio-gallery-card group" aria-label={`View ${title} story`} data-cursor-label="View">
-                      <Image src={project.coverImage} alt={`${title}, ${project.shootType} photography in ${location}`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" className="portfolio-gallery-image" />
+                      <Image src={project.coverImage} alt={`${title}, ${meta}`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" className="portfolio-gallery-image" />
                       <span className="portfolio-gallery-shade" />
                       <span className="portfolio-gallery-view">View</span>
                       <span className="portfolio-gallery-caption">
-                        <span className="portfolio-gallery-meta">{location} — {project.shootType}</span>
+                        <span className="portfolio-gallery-meta">{meta}</span>
                         <span className="portfolio-gallery-title">{title}</span>
                       </span>
                     </Link>

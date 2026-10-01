@@ -64,12 +64,12 @@ export function FeaturedStorySection() {
         </p>
 
         <h2 className="featured-story-heading display" data-featured-heading>
-          <span>{story.coupleNames[0]}</span>
-          <span><i data-featured-highlight>{story.coupleNames[1]}</i></span>
+          <span>{story.heading[0]}</span>
+          <span><i data-featured-highlight>{story.heading[1]}</i></span>
         </h2>
 
         <p className="featured-story-location" data-featured-detail>
-          {story.location} — {story.shootType}
+          {[story.location === "Location not listed" ? "" : story.location, story.shootType].filter(Boolean).join(" — ")}
         </p>
         <span className="featured-story-rule" data-featured-detail aria-hidden="true" />
         <p className="featured-story-description" data-featured-detail>{story.description}</p>
@@ -88,7 +88,7 @@ export function FeaturedStorySection() {
             >
               <Image
                 src={story.heroImage}
-                alt={`${story.couple}, ${story.shootType.toLowerCase()} in ${story.location}. ${story.description}`}
+                alt={`${story.title}, ${story.shootType.toLowerCase()}${story.location === "Location not listed" ? "" : ` in ${story.location}`}. ${story.description}`}
                 fill
                 loading="eager"
                 sizes="(max-width: 767px) calc(100vw - 36px), 72vw"
@@ -109,10 +109,10 @@ export function FeaturedStorySection() {
             transition={{ duration: prefersReducedMotion ? 0.2 : 0.35, ease: "easeOut" }}
           >
             <div>
-              <p>{story.location}</p>
+              <p>{story.location === "Location not listed" ? story.title : story.location}</p>
               <span>{story.shootType}</span>
             </div>
-            <Link href={`/portfolio/${story.slug}`} aria-label={`View full story: ${story.couple}`}>
+            <Link href={`/portfolio/${story.slug}`} aria-label={`View full story: ${story.title}`}>
               View full story <ArrowRight size={15} aria-hidden="true" />
             </Link>
           </motion.div>

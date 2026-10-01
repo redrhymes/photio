@@ -1,11 +1,11 @@
 import { projects } from "@/lib/content";
 
 export const featuredStories = projects.flatMap((project) => {
-  if (!project.featured || !project.featuredNames) return [];
+  if (!project.featured || !project.featuredHeading) return [];
   return [{
     slug: project.slug,
-    coupleNames: project.featuredNames,
-    couple: project.title,
+    heading: project.featuredHeading,
+    title: project.title,
     location: project.location,
     shootType: project.shootType,
     description: project.description,

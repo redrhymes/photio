@@ -1,6 +1,6 @@
 "use client";
 
-const filters = ["All", "Pre-Wedding", "Wedding", "Candid", "Cinematic", "Events", "Corporate"];
+const filters = ["All", "Wedding", "Pre-Wedding", "Corporate", "Events", "Music", "Candid", "Cinematic"];
 
 export function FilterBar({ selected, onSelect }: { selected: string; onSelect: (filter: string) => void }) {
   return (

@@ -42,20 +42,20 @@ export function PortfolioHeader() {
         <div className="portfolio-header-copy">
           <p className="portfolio-header-eyebrow">
             <span className="portfolio-header-eyebrow-line" data-portfolio-eyebrow-line />
-            <span data-portfolio-eyebrow>Portfolio</span>
+            <span data-portfolio-eyebrow>Photography &amp; Film</span>
           </p>
           <h1 id="portfolio-heading" className="portfolio-header-heading" data-portfolio-heading>
             <span>Every story,</span>
             <span><i data-portfolio-highlight>told differently.</i></span>
           </h1>
           <p className="portfolio-header-subcopy" data-portfolio-subcopy>
-            A collection of weddings, pre-wedding shoots and moments we&apos;ve had the honor of capturing across India.
+            Selected photographs and films from weddings, brand projects, live events and music — each shaped around its own people, place and purpose.
           </p>
           <div className="portfolio-header-stat" data-portfolio-stat>
             <span className="portfolio-header-stat-divider" data-portfolio-stat-divider aria-hidden="true" />
             <div>
               <span className="portfolio-header-stat-count" data-portfolio-count>{projects.length}</span>
-              <span className="portfolio-header-stat-label">Stories</span>
+              <span className="portfolio-header-stat-label">Selected projects</span>
             </div>
           </div>
         </div>

@@ -4,7 +4,10 @@ import { FeaturedStorySection } from "@/components/FeaturedStorySection";
 import { PortfolioGrid } from "@/components/PortfolioGrid";
 import { FinalCTASection } from "@/components/FinalCTASection";
 
-export const metadata: Metadata = { title: "Portfolio | Wedding Stories & Photography", description: "Explore Photio's candid, cinematic wedding and pre-wedding photography from Noida, Delhi NCR, and across India." };
+export const metadata: Metadata = {
+  title: "Portfolio | Photography & Film | Photio",
+  description: "Explore Photio's selected photography and film projects across weddings, brands, live events and music.",
+};
 
 export default function PortfolioPage() {
   return <><PortfolioHeader /><PortfolioGrid /><FeaturedStorySection /><FinalCTASection /></>;
