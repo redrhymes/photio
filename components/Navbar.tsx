@@ -2,7 +2,7 @@
 
 import Image from "@/components/OptimizedImage";
 import Link from "next/link";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MagneticButton } from "@/components/MagneticButton";
@@ -23,7 +23,6 @@ function isActive(pathname: string, href: string) {
 
 export function Navbar() {
   const pathname = usePathname();
-  const reducedMotion = useReducedMotion();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [visible, setVisible] = useState(true);
@@ -81,7 +80,7 @@ export function Navbar() {
     <>
       <header
         data-nav-theme={theme}
-        className={`fixed inset-x-0 top-0 z-[70] border-b border-white/[.08] bg-[rgba(10,10,10,.55)] text-text shadow-sm backdrop-blur-2xl transition-all duration-500 ${visible || menuOpen ? "translate-y-0" : "-translate-y-full"}`}
+        className={`fixed inset-x-0 top-0 z-[70] border-b border-white/[.08] bg-[rgba(10,10,10,.55)] text-text shadow-sm backdrop-blur-2xl transition-transform duration-300 ${visible || menuOpen ? "translate-y-0" : "-translate-y-full"}`}
       >
         <div className="mx-auto flex h-[68px] items-center justify-between px-4 sm:h-20 sm:px-10 xl:px-[88px]">
           <Link href="/" className="relative z-10 flex h-[68px] w-[68px] shrink-0 items-center justify-center sm:h-20 sm:w-20 sm:translate-y-1" aria-label="Photio home">
@@ -106,18 +105,6 @@ export function Navbar() {
                   className={`nav-link relative whitespace-nowrap py-3 text-[10px] font-normal uppercase tracking-[.14em] transition-colors duration-300 min-[1440px]:text-[13px] ${active ? "text-current" : "text-current/80 hover:text-current"}`}
                 >
                   {label}
-                  {active && (
-                    <motion.span
-                      layoutId="photio-nav-active"
-                      className="absolute -bottom-1 left-1/2 flex -translate-x-1/2 items-center gap-[3px]"
-                      transition={reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 32 }}
-                      aria-hidden="true"
-                    >
-                      <span className="h-px w-[14px] bg-current" />
-                      <span className="h-1 w-1 rounded-full bg-current" />
-                      <span className="h-px w-[14px] bg-current" />
-                    </motion.span>
-                  )}
                 </Link>
               );
             })}
